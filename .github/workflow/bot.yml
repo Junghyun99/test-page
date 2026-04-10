@@ -1,0 +1,26 @@
+name: Auto Trading Bot
+
+# 언제 실행할지 설정
+on:
+  schedule:
+    - cron: '0 * * * *' # 매시 정각마다 실행 (UTC 기준)
+  workflow_dispatch:     # 깃허브 웹 화면에서 수동으로 버튼을 눌러 실행할 수 있게 함
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. 코드 가져오기 (Checkout)
+        uses: actions/checkout@v3
+
+      - name: 2. 파이썬 환경 설정
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 3. 파이썬 매매 봇 실행
+        run: python main.py
+        # 필요한 경우 환경변수(Secrets)를 여기서 넘겨줍니다.
+        # env:
+        #   API_KEY: ${{ secrets.KOREA_INV_API_KEY }}
